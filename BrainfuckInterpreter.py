@@ -24,9 +24,6 @@ class BrainfuckInterpreterCommand(sublime_plugin.TextCommand):
                 if self.code.count('[') != self.code.count(']'):
                     msg = 'Brainfuck Interpreter: Bad loops count'
                     sublime.error_message(msg)
-                elif self.code.count(','):
-                    msg = 'Brainfuck Interpreter type value:'
-                    self.window.show_input_panel(msg, '', self.read_input, None, None)
                 else:
                     self.bf()
 
@@ -67,6 +64,8 @@ class BrainfuckInterpreterCommand(sublime_plugin.TextCommand):
                 self.output += chr(self.cells[self.pointer])
 
         elif command == ',':
+            msg = 'Brainfuck Interpreter type value:'
+            self.window.show_input_panel(msg, '', self.read_input, None, None)
             if self.input != []:
                 self.cells[self.pointer] = self.input.pop(0)
 
@@ -90,7 +89,6 @@ class BrainfuckInterpreterCommand(sublime_plugin.TextCommand):
 
     def read_input(self, input):
         self.input = list(input.encode('ascii', 'ignore'))
-        self.bf()
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
